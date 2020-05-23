@@ -3,8 +3,7 @@
 		<div class="head"><?php echo $values["article_content"][0]["request_head"]; ?></div>
 		<?php foreach($values["article_content"] as $contents ) {?>
 		<div class="content">
-			<div class="content-date">Veriliş Tarihi: <?php echo $contents["request_begin_date"]; ?></div>
-			<div class="content-date">Teslim Tarihi: <?php echo $contents["request_end_date"]; ?></div>	
+			<div class="content-date">Veriliş Tarihi: <?php echo $contents["request_begin_date"]; ?> | Teslim Tarihi: <?php echo $contents["request_end_date"]; ?></div>
 			<div class="content-head"><a href="?url=user&no=<?php echo $contents["user_no"]; ?>"><?php echo $contents['user_name']; ?></a></div>
 			<div class="content-body"><?php echo $contents["request_body"] ; ?></div>
 		</div>

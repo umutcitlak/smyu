@@ -68,7 +68,7 @@ function home(){
     view_public(array(
         "title"=>"Anasayfa",
         "body"=>"app/views/public/home.php",
-        "article2_content"=>db_contents_last5()));
+        "article2_content"=>db_notices_last5()));
 }
 function contents(){  
     view_public(array(
@@ -186,7 +186,7 @@ function image_edit($user_no){ //USER IMAGE CONTROL & UPLOAD
               } else {
                  $image_tmp_name = $_FILES['user_image']['tmp_name'];
                  copy($image_tmp_name, 'images/users/' . $_SESSION['user_no'].".jpg");
-                 header("Refresh: 0; ");
+                 header("Refresh: 7; ");
                  //message("Basarili", "Profil resminiz degistirildi. <a href='?url=panel&no=$user_no'>Geri donmek icin tiklayin</a>");
                  
               }
@@ -196,7 +196,7 @@ function image_edit($user_no){ //USER IMAGE CONTROL & UPLOAD
 }  //USER IMAGE CONTROL & END         
 function user_edit(){  // USER BIO & URL UPDATE
     if(isset($_POST['user_url']) && isset($_POST['user_bio'])){
-        db_user_update($_SESSION['user_no'], $_POST['user_url'], $_POST['user_bio']);
+        db_user_update($_SESSION['user_no'], $_SESSION['user_image'], $_POST['user_url'], $_POST['user_bio']);
     } // USER BIO & URL UPDATE END
 }
 function user_panel(){

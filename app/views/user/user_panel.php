@@ -6,7 +6,7 @@
                 <div class="user-thumbnail"><img src="<?php echo $values['article_content'][0]['user_image']; ?>" width="100%"/></div>
                 <form action="" method="POST" enctype="multipart/form-data">
                     <label id="label-file" for="input-file" onclick="document.getElementById('label-file').innerHTML='Resim Sec';">Resmi Degistir</label><input type="file" name="user_image" id="input-file" /><br><br>
-                    <input type="submit" value="RESMI KAYDET"><br><br>
+                    <input type="submit" name="submit" value="RESMI KAYDET"><br><br>
                 </form>
                 <div class="content-head">Seviye: <span style="font-weight: normal; color: #61605c">unknown</span></div>
                 <div class="content-head">Odev: <span style="font-weight: normal; color: #61605c">2</span></div>

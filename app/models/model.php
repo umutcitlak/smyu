@@ -9,7 +9,7 @@ if ($conn->connect_error) die("Connection Failed: " . $conn->connect_error);
 
 function db_user_new($user_no, $user_name, $user_password_1){
     global $conn;
-    $query = mysqli_query($conn, "INSERT INTO smyu_users (user_no, user_name, user_image, user_password, user_role) VALUES ('$user_no', '$user_name', 'images/users/default.jpg', '$user_password_1', 'user')") or die(mysqli_error($conn));
+    $query = mysqli_query($conn, "INSERT INTO smyu_users (user_no, user_name, user_image, user_password, user_role, user_bio, user_url) VALUES ('$user_no', '$user_name', 'images/users/default.jpg', '$user_password_1', 'user', '', '')") or die(mysqli_error($conn));
     if($query){
         $id=$conn->insert_id;
         message("Basarili", "Tebrikler! Kayit oldunuz numaraniz ve sifreniz ile giris yapabiliriniz <a href='?url=login'>Giriş yapmak tıklayın</a>");
@@ -130,9 +130,9 @@ function db_user($no){
     } else return false;
     return $fetch_assoc;
 }
-function db_user_update($no, $url, $bio){
+function db_user_update($no, $image, $url, $bio){
     global $conn;
-    $query=mysqli_query($conn,"UPDATE smyu_users SET user_url='$url', user_bio='$bio' WHERE user_no =$no") or die(mysqli_error($conn));
+    $query=mysqli_query($conn,"UPDATE smyu_users SET  user_image='$image', user_url='$url', user_bio='$bio' WHERE user_no =$no") or die(mysqli_error($conn));
     if($query){
         message("Basarili", "Tebrikler! Profiliniz güncellendi <a href='?url=user&no=$no'>Profili gormek icin tiklayin</a>");
     } else message("Basarisiz", "Uzgunuz! Profiliniz güncellenemedi");
@@ -206,6 +206,14 @@ function db_lesson($id){
     } else return false;
     return $fetch_assoc;
 }
+function db_notices_last5(){
+    global $conn;
+    $query = mysqli_query($conn, "SELECT DISTINCT smyu_notices.*, smyu_notice_files.notice_file_href FROM smyu_notices LEFT JOIN smyu_notice_files ON smyu_notices.notice_id = smyu_notice_files.notice_file_notice_id_fk ORDER BY notice_id DESC LIMIT 5") or die(mysqli_error($conn));
+    if (mysqli_affected_rows($conn)) {
+        $fetch_assoc = $query->fetch_all(1);
+    } else return false;
+    return $fetch_assoc;
+}
 function db_notices_all(){
     global $conn;
     $query = mysqli_query($conn, "SELECT DISTINCT smyu_notices.*, smyu_notice_files.notice_file_href FROM smyu_notices LEFT JOIN smyu_notice_files ON smyu_notices.notice_id = smyu_notice_files.notice_file_notice_id_fk ORDER BY notice_id DESC") or die(mysqli_error($conn));
@@ -235,9 +243,10 @@ function db_notice($notice_id){
     } else return false;
     return $fetch_assoc;
 }
+//YAPILIYOR...
 function db_notice_new($notice_head, $notice_body, $notice_status, $notice_user_id){
     global $conn;
-    $query = mysqli_query($conn, "INSERT INTO smyu_notice (request_begin_date, notice_head, notice_body, notice_status, notice_user_id_fk) VALUES (CURDATE(),  UPPER('$notice_head'), '$notice_body', '$notice_status', 'open', '$notice_user_id')") or die(mysqli_error($conn));
+    $query = mysqli_query($conn, "INSERT INTO smyu_notice (notice_date, notice_head, notice_body, notice_status, notice_user_id_fk) VALUES (CURDATE(),  UPPER('$notice_head'), '$notice_body', '$notice_status', '$notice_user_id')") or die(mysqli_error($conn));
     if($query){
         $id=$conn->insert_id;
         message("Basarili", "Tebrikler! Duyurunuz olusturuldu. <a href='?url=notice&id=$id'>Duyuruyu goruntule</a>");
